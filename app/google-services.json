@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "112707830067",
+    "project_id": "chatting-app-ffeda",
+    "storage_bucket": "chatting-app-ffeda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112707830067:android:74eda480a3ab3017d2be46",
+        "android_client_info": {
+          "package_name": "com.yogeshandroid.mycircle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112707830067-98rubfk7u7940g5ssc1d0c21giqtdret.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yogeshandroid.mycircle",
+            "certificate_hash": "12afc0a3700184e04f73e7ca3733e9fd36e26cba"
+          }
+        },
+        {
+          "client_id": "112707830067-nsg9iuu741ias5ktj78537f496b3jka4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ_KB0XcMDZ1ODPgycsJw757mdSno5qb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "112707830067-nsg9iuu741ias5ktj78537f496b3jka4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
