@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     theUser = new User(u.getProfilePic(), u.getUserName(), u.getMail(), u.getPassword(), u.getUserId(), u.getLastMsg(), u.getDeviceToken());
                     if (!theUser.getDeviceToken().equals(deviceToken)) {
                         //  update krna he to bhi hashmap ki help se krenge
-                        database.getReference().child("Users").child(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        database.getReference().child("Users").child(uId).child("deviceToken").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 HashMap<String, Object> map = new HashMap<>();
