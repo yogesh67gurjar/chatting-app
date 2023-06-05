@@ -1,68 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grayBackground"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context=".Login.LogIn">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:gravity="center_horizontal"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_whatsapp"/>
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/img_paperplane" />
 
 
         <EditText
-            android:id="@+id/email_et"
+            android:id="@+id/emailEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:textColor="@color/black"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="9dp" />
+            android:padding="9dp"
+            android:textColor="@color/black" />
 
         <EditText
-            android:id="@+id/password_et"
+            android:id="@+id/passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:ems="10"
-            android:textColor="@color/black"
             android:hint="Password"
             android:inputType="textPassword"
-            android:padding="9dp" />
+            android:padding="9dp"
+            android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/clickforsignup_tv"
+            android:id="@+id/clickForSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginVertical="5dp"
             android:padding="3dp"
-            android:text="click for sign up" />
+            android:text="click for sign up"
+            android:textSize="17sp" />
 
         <Button
-            android:id="@+id/signin_btn"
+            android:id="@+id/logInBtn"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="15dp"
-            android:text="Sign In"
+            android:text="Log In"
             app:cornerRadius="4dp" />
 
         <LinearLayout
@@ -72,24 +76,24 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/google_btn"
+                android:id="@+id/googleBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/ic_google"
                 android:padding="15dp"
-                android:layout_marginRight="4dp"
-                android:textColor="@color/black"
                 android:text="Google"
+                android:textColor="@color/black"
                 app:cornerRadius="4dp" />
 
             <Button
-                android:id="@+id/fb_btn"
+                android:id="@+id/fbBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="4dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/fb_color"
                 android:drawableLeft="@drawable/ic_fb"
                 android:padding="15dp"
@@ -99,7 +103,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/signupwithphone_tv"
+            android:id="@+id/phoneSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -111,4 +115,26 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/progressCard"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:visibility="gone"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/aniki_hamster"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

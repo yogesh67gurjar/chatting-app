@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.like.LikeButton
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        app:icon_type="Star"
+        app:circle_start_color="@color/colorPrimary"
+        app:like_drawable="@drawable/thumb_on"
+        app:unlike_drawable="@drawable/thumb_off"
+        app:dots_primary_color="@color/colorAccent"
+        app:dots_secondary_color="@color/colorPrimary"
+        app:circle_end_color="@color/colorAccent"
+        app:icon_size="25dp"
+        app:liked="true"
+        app:anim_scale_factor="2"
+        app:is_enabled="false"
+        />
+
+</LinearLayout>

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.yogeshandroid.mycircle.Login.LogIn;
-import com.yogeshandroid.mycircle.Login.SignIn;
-import com.yogeshandroid.mycircle.R;
 import com.yogeshandroid.mycircle.databinding.ActivitySplashBinding;
 
 public class Splash extends AppCompatActivity {
@@ -24,7 +22,7 @@ public class Splash extends AppCompatActivity {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this, SignIn.class));
+                startActivity(new Intent(Splash.this, LogIn.class));
             }
         };
         h.postDelayed(r, 3000);
