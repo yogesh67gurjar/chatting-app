@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolBar);
 
+
+
         // fragment setup
         adapter = new MainFragmentStateAdapter(this);
         binding.viewPager.setAdapter(adapter);
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getToken() {
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.d(TAG, "getToken: failed" + task.getException());

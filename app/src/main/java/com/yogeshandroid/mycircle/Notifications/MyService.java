@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
@@ -34,16 +35,20 @@ public class MyService extends FirebaseMessagingService {
             String body = message.getNotification().getBody();
 
             Notification notitication = new NotificationCompat.Builder(this, FCM_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_dp)
+                    .setSmallIcon(R.drawable.smiling)
                     .setContentTitle(title)
                     .setContentText(body)
-                    .setColor(Color.BLACK)
+                    .setColor(Color.BLUE)
                     .build();
 
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             manager.notify(10024, notitication);
-
-
+        }
+        if (message.getData().size() > 0) {
+            Log.d(TAG + "DATA MESSAGE", message.getData().toString());
+            for (String key : message.getData().keySet()) {
+                Log.d(TAG + " Data Message ", message.getData().get(key));
+            }
         }
     }
 
