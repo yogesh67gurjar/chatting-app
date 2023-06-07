@@ -1,9 +1,10 @@
 package com.yogeshandroid.mycircle.Modal;
 
 public class User {
-    String profilePic, userName, mail, password, userId, lastMsg, deviceToken;
+    String profilePic, userName, mail, password, userId, lastMsg;
 
     public User() {
+
     }
 
     public User(String userName, String mail, String password) {
@@ -12,14 +13,14 @@ public class User {
         this.password = password;
     }
 
-    public User(String profilePic, String userName, String mail, String password, String userId, String lastMsg, String deviceToken) {
+    public User(String profilePic, String userName, String mail, String password, String userId, String lastMsg) {
         this.profilePic = profilePic;
         this.userName = userName;
         this.mail = mail;
         this.password = password;
         this.userId = userId;
         this.lastMsg = lastMsg;
-        this.deviceToken = deviceToken;
+
     }
 
 
@@ -71,11 +72,4 @@ public class User {
         this.lastMsg = lastMsg;
     }
 
-    public String getDeviceToken() {
-        return deviceToken;
-    }
-
-    public void setDeviceToken(String deviceToken) {
-        this.deviceToken = deviceToken;
-    }
 }

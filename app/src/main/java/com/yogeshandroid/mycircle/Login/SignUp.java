@@ -50,15 +50,13 @@ public class SignUp extends AppCompatActivity {
             } else {
                 binding.progressCard.setVisibility(View.VISIBLE);
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-
                     if (task.isSuccessful()) {
                         binding.progressCard.setVisibility(View.GONE);
-                        User user = new User("", name, email, password, "", "", "");
+                        User user = new User("", name, email, password, "", "");
                         String id = task.getResult().getUser().getUid();
                         database.getReference().child("Users").child(id).setValue(user);
                         Toast.makeText(SignUp.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignUp.this, LogIn.class));
-                        finish();
+
                     } else {
                         binding.progressCard.setVisibility(View.GONE);
                         Toast.makeText(SignUp.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

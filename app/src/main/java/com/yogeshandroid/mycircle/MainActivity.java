@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     User theUser;
     GoogleSignInClient gsc;
-    String deviceToken;
+    String topic;
 
     private String[] titles = {"Chats", "Stories", "Calls"};
     MainFragmentStateAdapter adapter;
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolBar);
-
 
 
         // fragment setup
@@ -96,76 +97,88 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestRuntimePermissionFunc("notification");
         } else {
-            getToken();
+            getTopic();
         }
     }
 
-    private void getToken() {
-        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.d(TAG, "getToken: failed" + task.getException());
-                Toast.makeText(this, "error while generating token", Toast.LENGTH_SHORT).show();
-                return;
+    private void getTopic() {
+
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        String tipic = firebaseUser.getEmail().split("@")[0];
+        FirebaseMessaging.getInstance().subscribeToTopic(tipic).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Log.d(TAG, "TOPIC FAILED");
+                }
             }
-
-            deviceToken = task.getResult();
-
-            Log.d(TAG + "ToKeN ", deviceToken);
-
-            FirebaseUser firebaseUser = auth.getCurrentUser();
-            uId = firebaseUser.getUid();
-//            database.getReference().child("Users").child(id).setValue(user);
-
-            DatabaseReference reference = database.getReference().child("Users");
-
-// Attach a listener to read the data at our posts reference
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        u = snapshot.getValue(User.class);
-                        if (uId.equals(u.getUserId())) {
-                            theUser = u;
-                            break;
-                        }
-                    }
-
-                    theUser = new User(u.getProfilePic(), u.getUserName(), u.getMail(), u.getPassword(), u.getUserId(), u.getLastMsg(), u.getDeviceToken());
-                    if (!theUser.getDeviceToken().equals(deviceToken)) {
-                        //  update krna he to bhi hashmap ki help se krenge
-                        database.getReference().child("Users").child(uId).child("deviceToken").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                HashMap<String, Object> map = new HashMap<>();
-                                map.put("deviceToken", deviceToken);
-                                database.getReference().child("Users").child(uId).updateChildren(map);
-                                Log.d(TAG + "TOKEN_UPDATED", deviceToken);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("The read failed: " + databaseError.getCode());
-                }
-            });
-
         });
+
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+//            if (!task.isSuccessful()) {
+//                Log.d(TAG, "getToken: failed" + task.getException());
+//                Toast.makeText(this, "error while generating token", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//
+//            topic = task.getResult();
+//
+//            Log.d(TAG + "ToKeN ", topic);
+//
+//            FirebaseUser firebaseUser = auth.getCurrentUser();
+//            assert firebaseUser != null;
+//            uId = firebaseUser.getUid();
+////            database.getReference().child("Users").child(id).setValue(user);
+//
+//            DatabaseReference reference = database.getReference().child("Users");
+//
+//// Attach a listener to read the data at our posts reference
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        u = snapshot.getValue(User.class);
+//                        if (uId.equals(u.getUserId())) {
+//                            theUser = u;
+//                            break;
+//                        }
+//                    }
+//
+//                    theUser = new User(u.getProfilePic(), u.getUserName(), u.getMail(), u.getPassword(), u.getUserId(), u.getLastMsg(), u.getTopic());
+//                    if (!theUser.getTopic().equals(topic)) {
+//                        //  update krna he to bhi hashmap ki help se krenge
+//                        database.getReference().child("Users").child(uId).child("deviceToken").addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                HashMap<String, Object> map = new HashMap<>();
+//                                map.put("deviceToken", topic);
+//                                database.getReference().child("Users").child(uId).updateChildren(map);
+//                                Log.d(TAG + "TOKEN_UPDATED", topic);
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    System.out.println("The read failed: " + databaseError.getCode());
+//                }
+//            });
+//
+//        });
     }
 
     private void requestRuntimePermissionFunc(String str) {
         if (str.equals("notification")) {
 
             if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                getToken();
+                getTopic();
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.POST_NOTIFICATIONS)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("this permission is required for this and this")
@@ -187,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == NOTIFICATION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getToken();
+                getTopic();
             } else if (!ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.POST_NOTIFICATIONS)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("this feature is unavailable , now open settings ")
@@ -219,8 +232,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.logout) {
             properlySignout();
 
-            startActivity(new Intent(MainActivity.this, LogIn.class));
-            finish();
         } else if (item.getItemId() == R.id.camera) {
 
             Toast.makeText(this, "Camera clicked", Toast.LENGTH_SHORT).show();
@@ -233,37 +244,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void properlySignout() {
-        DatabaseReference reference = database.getReference().child("Users");
-
-        // Attach a listener to read the data at our posts reference
-        reference.addValueEventListener(new ValueEventListener() {
+        String tipic = auth.getCurrentUser().getEmail().split("@")[0];
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(tipic).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                database.getReference().child("Users").child(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("deviceToken", "");
-                        database.getReference().child("Users").child(uId).updateChildren(map);
-                        Log.d(TAG + "TOKEN_REMOVED", deviceToken);
-
-                        auth.signOut();
-//                gsc.signOut();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
+            public void onComplete(@NonNull Task<Void> task) {
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LogIn.class));
+                finish();
+////                gsc.signOut();
             }
         });
+        // Attach a listener to read the data at our posts reference
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//        DatabaseReference reference = database.getReference().child("Users");
+//
+//                database.getReference().child("Users").child(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        HashMap<String, Object> map = new HashMap<>();
+//                        map.put("deviceToken", "");
+//                        database.getReference().child("Users").child(uId).updateChildren(map);
+//                        Log.d(TAG + "TOKEN_REMOVED", topic);
+//
+//                        auth.signOut();
+//                        startActivity(new Intent(MainActivity.this, LogIn.class));
+//                        finish();
+////                gsc.signOut();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                System.out.println("The read failed: " + databaseError.getCode());
+//            }
+//        });
 
     }
 }

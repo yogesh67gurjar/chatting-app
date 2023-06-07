@@ -4,6 +4,7 @@ import static com.yogeshandroid.mycircle.Notifications.Channel.FCM_CHANNEL_ID;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.yogeshandroid.mycircle.MainActivity;
 import com.yogeshandroid.mycircle.R;
 
 public class MyService extends FirebaseMessagingService {
@@ -34,11 +36,16 @@ public class MyService extends FirebaseMessagingService {
             String title = message.getNotification().getTitle();
             String body = message.getNotification().getBody();
 
+//            Intent pi=new Intent(this, MainActivity.class);
+//            PendingIntent conte=PendingIntent.getActivity(this, 0, pi, PendingIntent.FLAG_IMMUTABLE);
+
             Notification notitication = new NotificationCompat.Builder(this, FCM_CHANNEL_ID)
                     .setSmallIcon(R.drawable.smiling)
                     .setContentTitle(title)
                     .setContentText(body)
+//                    .setContentIntent()
                     .setColor(Color.BLUE)
+//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .build();
 
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

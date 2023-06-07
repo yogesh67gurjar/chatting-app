@@ -108,11 +108,7 @@ public class LogIn extends AppCompatActivity {
 //            startActivity(new Intent(LogIn.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 //        }
 //
-        // agar apn ne signin with email and password kiya he to uska check hoga ki already log in kiya hua he kya , agr kiya hua he to aage bdh jao ye screen mt dikhao
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LogIn.this, MainActivity.class));
-            finish();
-        }
+
 
         binding.clickForSignUp.setOnClickListener(v -> startActivity(new Intent(LogIn.this, SignUp.class)));
 

@@ -21,10 +21,10 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:title="Whatsapp"
-                app:titleTextColor="@color/white"
+                app:title="Happy Talk"
+                app:titleTextColor="@color/black"
                 android:id="@+id/toolBar"
-                android:background="#1A2221"
+                android:background="@color/lightyellow"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,11 +45,13 @@
         app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tabIndicatorColor="#0E7A6C"
-        app:tabSelectedTextColor="#0E7A6C"
-        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/black"
         android:paddingBottom="5dp"
-        android:background="#1A2221" />
+        android:background="@color/lightyellow" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
