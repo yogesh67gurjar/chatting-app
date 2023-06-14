@@ -23,6 +23,13 @@ public class User {
 
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getProfilePic() {
         return profilePic;
@@ -56,13 +63,7 @@ public class User {
         this.password = password;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getLastMsg() {
         return lastMsg;

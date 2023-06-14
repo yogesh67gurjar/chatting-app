@@ -5,9 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.yogeshandroid.mycircle.Fragments.Calls;
-import com.yogeshandroid.mycircle.Fragments.Chats;
-import com.yogeshandroid.mycircle.Fragments.Stories;
 
 public class MainFragmentStateAdapter extends FragmentStateAdapter {
 
@@ -20,16 +17,17 @@ public class MainFragmentStateAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position)
-        {
-            case 0:
-                return new Chats();
-            case 1:
-                return new Stories();
-            case 2:
-                return new Calls();
-        }
-        return new Chats();
+//        switch (position)
+//        {
+//            case 0:
+//                return new Chats();
+//            case 1:
+//                return new Stories();
+//            case 2:
+//                return new Calls();
+//        }
+//        return new Chats();
+        return null;
     }
 
     @Override

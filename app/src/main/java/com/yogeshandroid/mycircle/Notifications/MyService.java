@@ -4,20 +4,14 @@ import static com.yogeshandroid.mycircle.Notifications.Channel.FCM_CHANNEL_ID;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.IBinder;
 import android.util.Log;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.yogeshandroid.mycircle.MainActivity;
 import com.yogeshandroid.mycircle.R;
 
 public class MyService extends FirebaseMessagingService {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InsideChat">
+    tools:context=".Activity.Chatting.InsideChat">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -19,26 +19,28 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#FAFA70">
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_back">
 
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/backBtnInsideChat"-->
-<!--                android:layout_width="36dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:background="@color/trans"-->
-<!--                android:src="@drawable/ic_back" />-->
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/backBtnInsideChat"-->
+            <!--                android:layout_width="36dp"-->
+            <!--                android:layout_height="36dp"-->
+            <!--                android:background="@color/trans"-->
+            <!--                android:src="@drawable/ic_back" />-->
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/dpInsideChat"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
+                android:layout_marginStart="0dp"
                 android:src="@drawable/ic_dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-
+                android:layout_marginStart="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -51,7 +53,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+                    android:text="gabbar_shub_7"
                     android:textColor="#252525"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -66,7 +68,7 @@
                     android:ellipsize="end"
                     android:gravity="top"
                     android:maxLines="1"
-                    android:text="last seen 12:31 pmlorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+                    android:text="Online"
                     android:textColor="#252525"
                     android:textSize="12sp" />
 
@@ -78,12 +80,43 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chattingRv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/llSendMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
+    <LinearLayout
+        android:id="@+id/llSendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="7dp"
+            android:src="@drawable/ic_camera" />
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter your message..."
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/sendBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"
+            android:src="@drawable/ic_send" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

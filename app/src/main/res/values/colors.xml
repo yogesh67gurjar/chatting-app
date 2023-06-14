@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -12,27 +12,16 @@
     <color name="colorPrimaryDark">#095049</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="lightGrey">#EDEDED</color>
-    <color name="whatsAppColor">#0b6156</color>
-    <color name="red">#9F0B0B</color>
-    <color name="status_background">#009688</color>
-    <color name="chat_background">#8BC34A</color>
-    <color name="fb_color">#3c5793</color>
-    <color name="lightgreen">#e5ffcc</color>
-    <color name="settingsIconColor">#0E8374</color>
-    <color name="grayBackground">#BCBCBC</color>
-    <color name="chatbackground">#AAAAAA</color>
+    <color name="blacklight">#9C000000</color>
 
     <color name="trans">#00A88686</color>
     <color name="lavender">#e4e1ec</color>
 
-    <color name="red2">#FF0000</color>
+    <color name="red">#FF0000</color>
     <color name="lime">#00FF00</color>
     <color name="blue">#0000FF</color>
     <color name="yellow">#FFFF00</color>
-    <color name="lightyellow">#FAFA70</color>
-
-
+    <color name="lightyellow">#FFFF8A</color>
     <color name="magenta">#FF00FF</color>
     <color name="cyan">#00FFFF</color>
     <color name="orange">#FFA500</color>

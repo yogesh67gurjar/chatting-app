@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#EBFBD4"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".Login.SignUp">
+    tools:context=".Activity.Login.SignUpActivity">
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginHorizontal="30dp"
+    app:cardElevation="40dp"
+    app:cardCornerRadius="36dp"
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
         <ImageView
             android:layout_width="80dp"
@@ -89,6 +97,7 @@
             android:layout_gravity="right"
             android:layout_marginVertical="5dp"
             android:padding="3dp"
+            android:fontFamily="@font/amarante"
             android:text="already have an account ?"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -101,8 +110,10 @@
             android:background="@drawable/bg_btn"
             android:elevation="20dp"
             android:padding="15dp"
+            android:fontFamily="@font/amarante"
             android:text="Sign Up"
             android:textAllCaps="false"
+            android:textStyle="bold"
             android:textColor="@color/black" />
 
         <LinearLayout
@@ -113,30 +124,32 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/googleBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/ic_google"
                 android:padding="15dp"
                 android:text="Google"
                 android:textAllCaps="false"
+                android:background="@drawable/bg_google"
                 android:textColor="@color/black"
-                app:cornerRadius="4dp" />
+                />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/fbBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/fb_color"
+                android:background="@drawable/bg_facebook"
                 android:drawableLeft="@drawable/ic_facebook"
                 android:padding="15dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="Facebook"
                 android:textAllCaps="false"
-                app:cornerRadius="4dp" />
+                />
 
         </LinearLayout>
 
@@ -152,6 +165,8 @@
 
 
     </LinearLayout>
+
+</androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/progressCard"

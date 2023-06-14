@@ -12,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yogeshandroid.mycircle.InsideChat;
+import com.bumptech.glide.Glide;
+import com.yogeshandroid.mycircle.Activity.Chatting.InsideChat;
 import com.yogeshandroid.mycircle.Modal.User;
 import com.yogeshandroid.mycircle.R;
 
@@ -23,9 +24,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHolder> {
 
     Context context;
+    List<User> userList;
 
-    public ChatsAdapter(Context context) {
+    public ChatsAdapter(Context context, List<User> userList) {
         this.context = context;
+        this.userList = userList;
     }
 
     @NonNull
@@ -38,17 +41,28 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ChatsAdapter.ChatsViewHolder holder, int position) {
+
+        User singleUnit = userList.get(position);
+
+        Glide.with(context).load(singleUnit.getProfilePic()).placeholder(R.drawable.img_avatar).into(holder.dpChat);
+
         holder.cardChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, InsideChat.class));
+                Intent intent=new Intent(context,InsideChat.class);
+                intent.putExtra("name",singleUnit.getUserName());
+                intent.putExtra("dp",singleUnit.getProfilePic());
+                intent.putExtra("uId",singleUnit.getUserId());
+                context.startActivity(intent);
             }
         });
+
+        holder.nameChat.setText(singleUnit.getUserName());
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return userList.size();
     }
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,5 @@
-package com.yogeshandroid.mycircle.Login;
+package com.yogeshandroid.mycircle.Activity.Login;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,26 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yogeshandroid.mycircle.Modal.User;
-import com.yogeshandroid.mycircle.R;
-import com.yogeshandroid.mycircle.databinding.ActivitySignUpBinding;
+import com.yogeshandroid.mycircle.databinding.ActivitySignupBinding;
 
-public class SignUp extends AppCompatActivity {
-    ActivitySignUpBinding binding;
-
+public class SignUpActivity extends AppCompatActivity {
+    ActivitySignupBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         auth = FirebaseAuth.getInstance();
@@ -52,19 +45,23 @@ public class SignUp extends AppCompatActivity {
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         binding.progressCard.setVisibility(View.GONE);
-                        User user = new User("", name, email, password, "", "");
                         String id = task.getResult().getUser().getUid();
+
+                        User user = new User("", name, email, password,id, "");
                         database.getReference().child("Users").child(id).setValue(user);
-                        Toast.makeText(SignUp.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
+                        binding.emailEt.setText("");
+                        binding.usernameEt.setText("");
+                        binding.passwordEt.setText("");
+                        Toast.makeText(SignUpActivity.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
 
                     } else {
                         binding.progressCard.setVisibility(View.GONE);
-                        Toast.makeText(SignUp.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
 
-        binding.clickForSignIn.setOnClickListener(v -> startActivity(new Intent(SignUp.this, LogIn.class)));
+        binding.clickForSignIn.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, LogIn.class)));
     }
 }

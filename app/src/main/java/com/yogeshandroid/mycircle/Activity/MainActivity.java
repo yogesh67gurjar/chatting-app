@@ -1,6 +1,7 @@
-package com.yogeshandroid.mycircle;
+package com.yogeshandroid.mycircle.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,21 +28,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.yogeshandroid.mycircle.Adapters.MainFragmentStateAdapter;
-import com.yogeshandroid.mycircle.Login.LogIn;
+import com.yogeshandroid.mycircle.Activity.Login.LogIn;
+import com.yogeshandroid.mycircle.Fragment.Home.HomeFragment;
+import com.yogeshandroid.mycircle.Fragment.Notification.NotificationFragment;
+import com.yogeshandroid.mycircle.Fragment.Search.SearchFragment;
+import com.yogeshandroid.mycircle.Fragment.Setting.SettingFragment;
 import com.yogeshandroid.mycircle.Modal.User;
+import com.yogeshandroid.mycircle.R;
 import com.yogeshandroid.mycircle.databinding.ActivityMainBinding;
-
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -57,19 +58,29 @@ public class MainActivity extends AppCompatActivity {
     private String[] titles = {"Chats", "Stories", "Calls"};
     MainFragmentStateAdapter adapter;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreferences = getSharedPreferences("happyTalk", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
-        setSupportActionBar(binding.toolBar);
+        openDrawer();
+        bottomNavigation();
 
+//        setSupportActionBar(binding.toolBar);
+        binding.txtHeading.setText("Happy Talk");
 
         // fragment setup
         adapter = new MainFragmentStateAdapter(this);
-        binding.viewPager.setAdapter(adapter);
-        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (((tab, position) -> tab.setText(titles[position])))).attach();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new HomeFragment()).commit();
+//        binding.viewPager.setAdapter(adapter);
+//        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (((tab, position) -> tab.setText(titles[position])))).attach();
 
 
         gso = new GoogleSignInOptions
@@ -82,6 +93,34 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+
+
+        binding.floatingActionButton.setOnClickListener(v -> {
+            Toast.makeText(this, "open profile activity here", Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(getApplicationContext(), .class));
+        });
+
+
+    }
+
+    private void bottomNavigation() {
+        binding.navigation.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.home) {
+                binding.txtHeading.setText("Happy Talk");
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+            } else if (item.getItemId() == R.id.search) {
+                binding.txtHeading.setText("Search");
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment()).commit();
+            } else if (item.getItemId() == R.id.notification) {
+                binding.txtHeading.setText("Notification");
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new NotificationFragment()).commit();
+            } else if (item.getItemId() == R.id.setting) {
+                binding.txtHeading.setText("Setting");
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new SettingFragment()).commit();
+            }
+            return true;
+        });
     }
 
     @Override
@@ -101,18 +140,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void openDrawer() {
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar
+                , 0, 0) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        binding.drawernavigationView.setNavigationItemSelectedListener(item -> {
+
+            if (item.getItemId() == R.id.instagram) {
+                Toast.makeText(this, "Instagram", Toast.LENGTH_SHORT).show();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
+//                    binding.textView.setText("Home");
+            } else if (item.getItemId() == R.id.logout) {
+                properlySignout();
+            }
+            return true;
+        });
+    }
+
     private void getTopic() {
 
         FirebaseUser firebaseUser = auth.getCurrentUser();
         String tipic = firebaseUser.getEmail().split("@")[0];
-        FirebaseMessaging.getInstance().subscribeToTopic(tipic).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (!task.isSuccessful()) {
-                    Log.d(TAG, "TOPIC FAILED");
-                }
+        FirebaseMessaging.getInstance().subscribeToTopic(tipic).addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Toast.makeText(MainActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "TOPIC FAILED " + task.getException().toString());
             }
         });
+
 
 //        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
 //            if (!task.isSuccessful()) {
@@ -225,33 +291,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.logout) {
-            properlySignout();
-
-        } else if (item.getItemId() == R.id.camera) {
-
-            Toast.makeText(this, "Camera clicked", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.search) {
-
-            Toast.makeText(this, "Search clicked", Toast.LENGTH_SHORT).show();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void properlySignout() {
         String tipic = auth.getCurrentUser().getEmail().split("@")[0];
         FirebaseMessaging.getInstance().unsubscribeFromTopic(tipic).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                if (sharedPreferences.contains("google")) {
+                    editor.remove("google");
+                    gsc.signOut();
+                }
                 auth.signOut();
                 startActivity(new Intent(MainActivity.this, LogIn.class));
                 finish();
-////                gsc.signOut();
+
+
             }
         });
         // Attach a listener to read the data at our posts reference

@@ -1,4 +1,4 @@
-package com.yogeshandroid.mycircle.Welcome;
+package com.yogeshandroid.mycircle.Activity.Welcome;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.yogeshandroid.mycircle.Login.LogIn;
-import com.yogeshandroid.mycircle.MainActivity;
+import com.yogeshandroid.mycircle.Activity.Login.LogIn;
+import com.yogeshandroid.mycircle.Activity.MainActivity;
 import com.yogeshandroid.mycircle.databinding.ActivitySplashBinding;
 
 public class Splash extends AppCompatActivity {
@@ -41,6 +41,7 @@ public class Splash extends AppCompatActivity {
                     bundle.putString("jagah", getIntent().getExtras().get("jagah").toString());
                     i.putExtras(bundle);
                 }
+
                 if (auth.getCurrentUser() != null) {
                     // agar apn ne signin with email and password kiya he to uska check hoga ki already log in kiya hua he kya , agr kiya hua he to aage bdh jao ye screen mt dikhao
                     i = new Intent(Splash.this, MainActivity.class);

@@ -14,9 +14,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_dp"
+            android:src="@drawable/img_avatar"
             app:civ_border_width="1dp"
-
+android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

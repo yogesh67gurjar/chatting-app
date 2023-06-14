@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "112707830067",
+    "firebase_url": "https://chatting-app-ffeda-default-rtdb.firebaseio.com",
     "project_id": "chatting-app-ffeda",
     "storage_bucket": "chatting-app-ffeda.appspot.com"
   },
@@ -14,15 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "112707830067-98rubfk7u7940g5ssc1d0c21giqtdret.apps.googleusercontent.com",
+          "client_id": "112707830067-qtqq9e34mu4sp8v60g8edkslilpb4qgm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.yogeshandroid.mycircle",
-            "certificate_hash": "12afc0a3700184e04f73e7ca3733e9fd36e26cba"
+            "certificate_hash": "b52b0ed3643334ef56c025ff137df1ecefd7b109"
           }
         },
         {
-          "client_id": "112707830067-nsg9iuu741ias5ktj78537f496b3jka4.apps.googleusercontent.com",
+          "client_id": "112707830067-oubj9nvc4dnu6cvjvldnt813n804kq25.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
