@@ -13,6 +13,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.yogeshandroid.mycircle.Activity.Chatting.InsideChat;
 import com.yogeshandroid.mycircle.Modal.User;
 import com.yogeshandroid.mycircle.R;
@@ -44,20 +49,38 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
 
         User singleUnit = userList.get(position);
 
-        Glide.with(context).load(singleUnit.getProfilePic()).placeholder(R.drawable.img_avatar).into(holder.dpChat);
+        Glide.with(context).load(singleUnit.getProfilePic()).placeholder(R.drawable.smiling).into(holder.dpChat);
 
         holder.cardChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,InsideChat.class);
-                intent.putExtra("name",singleUnit.getUserName());
-                intent.putExtra("dp",singleUnit.getProfilePic());
-                intent.putExtra("uId",singleUnit.getUserId());
+                Intent intent = new Intent(context, InsideChat.class);
+                intent.putExtra("name", singleUnit.getUserName());
+                intent.putExtra("dp", singleUnit.getProfilePic());
+                intent.putExtra("uId", singleUnit.getUserId());
                 context.startActivity(intent);
             }
         });
 
         holder.nameChat.setText(singleUnit.getUserName());
+
+//        sender room'FirebaseAuth.getInstance().getUid()+singleUnit.getUserId()
+        // order by se apn ko last ki cheej mil jaegi
+        FirebaseDatabase.getInstance().getReference().child("Chats").child(FirebaseAuth.getInstance().getUid() + singleUnit.getUserId()).orderByChild("timeStamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                        holder.lastMsgChat.setText(snapshot1.child("message").getValue().toString());
+                        // same
+                        holder.lastMsgChat.setText(snapshot1.child("message").getValue(String.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 
     @Override

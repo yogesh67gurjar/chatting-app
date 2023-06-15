@@ -62,7 +62,7 @@ public class InsideChat extends AppCompatActivity {
         insideChatAdapter = new InsideChatAdapter(messageModelList, InsideChat.this);
 
         binding.nameInsideChat.setText(getIntent().getStringExtra("name"));
-        Glide.with(InsideChat.this).load(getIntent().getStringExtra("dp")).placeholder(R.drawable.img_avatar).into(binding.dpInsideChat);
+        Glide.with(InsideChat.this).load(getIntent().getStringExtra("dp")).placeholder(R.drawable.smiling).into(binding.dpInsideChat);
 
         receiverId = getIntent().getStringExtra("uId");
         senderId = auth.getUid();
@@ -107,9 +107,7 @@ public class InsideChat extends AppCompatActivity {
                         binding.text.setText("");
                         database.getReference().child("Chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(Void unused) {
-
-                            }
+                            public void onSuccess(Void unused) {}
                         });
                     }
                 });

@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.yogeshandroid.mycircle.Activity.Profile.Profile;
 import com.yogeshandroid.mycircle.Adapters.MainFragmentStateAdapter;
 import com.yogeshandroid.mycircle.Activity.Login.LogIn;
 import com.yogeshandroid.mycircle.Fragment.Home.HomeFragment;
@@ -95,9 +96,8 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
 
-        binding.floatingActionButton.setOnClickListener(v -> {
-            Toast.makeText(this, "open profile activity here", Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(getApplicationContext(), .class));
+        binding.profile.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, Profile.class));
         });
 
 

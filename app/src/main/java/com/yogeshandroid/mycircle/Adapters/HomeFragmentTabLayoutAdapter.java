@@ -10,7 +10,8 @@ import com.yogeshandroid.mycircle.Fragment.Home.Tablayout.MessageTab;
 import com.yogeshandroid.mycircle.Fragment.Home.Tablayout.SocialTab;
 
 public class HomeFragmentTabLayoutAdapter extends FragmentStateAdapter {
-    private String[] titles={"Camera","Social","Message"};
+    private String[] titles = {"Camera", "Chats", "Stories"};
+
     public HomeFragmentTabLayoutAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -18,16 +19,15 @@ public class HomeFragmentTabLayoutAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 return new CameraTab();
             case 1:
-                return new SocialTab();
-            case 2:
                 return new MessageTab();
+            case 2:
+                return new SocialTab();
         }
-        return new SocialTab();
+        return new MessageTab();
     }
 
     @Override
