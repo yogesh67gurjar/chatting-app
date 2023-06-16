@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.yogeshandroid.mycircle.Activity.Profile.Profile;
 import com.yogeshandroid.mycircle.Adapters.MainFragmentStateAdapter;
 import com.yogeshandroid.mycircle.Activity.Login.LogIn;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MainFragmentStateAdapter(this);
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, new HomeFragment()).commit();
+        binding.bottomNavigation.setItemSelected(R.id.home, true);
 //        binding.viewPager.setAdapter(adapter);
 //        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (((tab, position) -> tab.setText(titles[position])))).attach();
 
@@ -103,24 +105,47 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void bottomNavigation() {
-        binding.navigation.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.home) {
-                binding.txtHeading.setText("Happy Talk");
+    public void newChatFunc() {
+        binding.bottomNavigation.setItemSelected(R.id.search, true);
+        binding.bottomNavigation.setItemSelected(R.id.home, false);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment()).commit();
+    }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
-            } else if (item.getItemId() == R.id.search) {
-                binding.txtHeading.setText("Search");
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment()).commit();
-            } else if (item.getItemId() == R.id.notification) {
-                binding.txtHeading.setText("Notification");
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new NotificationFragment()).commit();
-            } else if (item.getItemId() == R.id.setting) {
-                binding.txtHeading.setText("Setting");
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new SettingFragment()).commit();
+    public void hiBolDiya() {
+        binding.bottomNavigation.setItemSelected(R.id.search, false);
+        binding.bottomNavigation.setItemSelected(R.id.home, true);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+    }
+
+    private void bottomNavigation() {
+
+        binding.bottomNavigation.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                if (i == 3) {
+                    Toast.makeText(MainActivity.this, "fsddb", Toast.LENGTH_SHORT).show();
+                }
             }
-            return true;
         });
+        binding.bottomNavigation.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                if (i == R.id.home) {
+                    binding.txtHeading.setText("Happy Talk");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+                } else if (i == R.id.search) {
+                    binding.txtHeading.setText("Search");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment()).commit();
+                } else if (i == R.id.notification) {
+                    binding.txtHeading.setText("Notification");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new NotificationFragment()).commit();
+                } else if (i == R.id.setting) {
+                    binding.txtHeading.setText("Setting");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new SettingFragment()).commit();
+                }
+            }
+        });
+
     }
 
     @Override

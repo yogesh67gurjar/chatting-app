@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.yogeshandroid.mycircle.Fragment.Home.Tablayout.CameraTab;
 import com.yogeshandroid.mycircle.Fragment.Home.Tablayout.MessageTab;
-import com.yogeshandroid.mycircle.Fragment.Home.Tablayout.SocialTab;
+import com.yogeshandroid.mycircle.Fragment.Home.Tablayout.Status;
 
 public class HomeFragmentTabLayoutAdapter extends FragmentStateAdapter {
     private String[] titles = {"Camera", "Chats", "Stories"};
@@ -25,7 +25,7 @@ public class HomeFragmentTabLayoutAdapter extends FragmentStateAdapter {
             case 1:
                 return new MessageTab();
             case 2:
-                return new SocialTab();
+                return new Status();
         }
         return new MessageTab();
     }

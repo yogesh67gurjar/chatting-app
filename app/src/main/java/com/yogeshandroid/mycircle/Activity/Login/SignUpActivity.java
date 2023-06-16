@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
                         binding.progressCard.setVisibility(View.GONE);
                         String id = task.getResult().getUser().getUid();
 
-                        User user = new User("", name, email, password,id, "");
+                        User user = new User("", name, email, password,id, "","");
                         database.getReference().child("Users").child(id).setValue(user);
                         binding.emailEt.setText("");
                         binding.usernameEt.setText("");

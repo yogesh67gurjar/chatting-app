@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/home"
+        app:cnb_iconColor="@color/blue"
         android:icon="@drawable/ic_home"
         android:title="Home" />
 
     <item
         android:id="@+id/search"
+        app:cnb_iconColor="@color/purple"
+
         android:icon="@drawable/ic_search"
         android:title="Search" />
-    <item
-        android:id="@+id/fab"
-        android:enabled="false"
-        android:title="" />
 
     <item
         android:id="@+id/notification"
+        app:cnb_iconColor="@color/deeppink"
+
         android:icon="@drawable/ic_notification"
         android:title="Notification" />
 
     <item
         android:id="@+id/setting"
+        app:cnb_iconColor="@color/green"
+
         android:icon="@drawable/ic_setting"
         android:title="Setting" />
 

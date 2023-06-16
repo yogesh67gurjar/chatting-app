@@ -1,7 +1,7 @@
 package com.yogeshandroid.mycircle.Modal;
 
 public class User {
-    String profilePic, userName, mail, password, userId, lastMsg;
+    String profilePic, userName, mail, password, userId, lastMsg,status;
 
     public User() {
 
@@ -13,14 +13,22 @@ public class User {
         this.password = password;
     }
 
-    public User(String profilePic, String userName, String mail, String password, String userId, String lastMsg) {
+    public User(String profilePic, String userName, String mail, String password, String userId, String lastMsg, String status) {
         this.profilePic = profilePic;
         this.userName = userName;
         this.mail = mail;
         this.password = password;
         this.userId = userId;
         this.lastMsg = lastMsg;
+        this.status = status;
+    }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getUserId() {

@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yogeshandroid.mycircle.Activity.MainActivity;
 import com.yogeshandroid.mycircle.Adapters.ChatsAdapter;
 import com.yogeshandroid.mycircle.Modal.User;
 import com.yogeshandroid.mycircle.databinding.FragmentMessageTabBinding;
@@ -37,6 +38,26 @@ public class MessageTab extends Fragment {
         userList = new ArrayList<>();
         chatsAdapter = new ChatsAdapter(getContext(), userList);
 
+        binding.ripple.startAnimation();
+
+
+
+
+        binding.newChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getContext()).newChatFunc();
+            }
+        });
+
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -46,11 +67,37 @@ public class MessageTab extends Fragment {
                     single.setUserId(snap.getKey());
                     if (!FirebaseAuth.getInstance().getUid().equals(single.getUserId()))
                     {
-                        userList.add(single);
-                    }
 
+                        FirebaseDatabase.getInstance().getReference().child("Chats").child(FirebaseAuth.getInstance().getUid() + single.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists())
+                                {
+                                    userList.add(single);
+
+                                }
+                                chatsAdapter.notifyDataSetChanged();
+
+                                if (userList.size() > 0) {
+                                    binding.RvMessage.setVisibility(View.VISIBLE);
+                                    binding.RvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    binding.RvMessage.setAdapter(chatsAdapter);
+                                    binding.ripple.setVisibility(View.GONE);
+                                } else {
+                                    binding.RvMessage.setVisibility(View.GONE);
+                                    binding.ripple.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
                 }
-                chatsAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -59,10 +106,5 @@ public class MessageTab extends Fragment {
         });
 
 
-        binding.RvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.RvMessage.setAdapter(chatsAdapter);
-
-
-        return binding.getRoot();
     }
 }
