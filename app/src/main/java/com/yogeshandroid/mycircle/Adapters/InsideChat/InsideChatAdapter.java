@@ -1,6 +1,8 @@
 package com.yogeshandroid.mycircle.Adapters.InsideChat;
 
 import android.content.Context;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.yogeshandroid.mycircle.Modal.Message.MessageModel;
 import com.yogeshandroid.mycircle.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 public class InsideChatAdapter extends RecyclerView.Adapter {
     List<MessageModel> messageModelList;
@@ -47,10 +53,24 @@ public class InsideChatAdapter extends RecyclerView.Adapter {
         if(holder.getClass()==senderViewHolder.class)
         {
             ((senderViewHolder)holder).senderMsg.setText(singleUnit.getMessage());
+            ((senderViewHolder)holder).senderTime.setText(convertTimeToHourMinute(singleUnit.getTimeStamp()));
         }
         else {
             ((receiverViewHolder)holder).receiverMsg.setText(singleUnit.getMessage());
+            ((receiverViewHolder)holder).receiverTime.setText(convertTimeToHourMinute(singleUnit.getTimeStamp()));
         }
+
+    }
+
+    public String convertTimeToHourMinute(long timeInMillis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMillis);
+
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        String amPm = calendar.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+        Log.d("timetimetime",String.format("%02d:%02d %s", hour, minute, amPm));
+        return String.format("%02d:%02d %s", hour, minute, amPm);
     }
 
     @Override

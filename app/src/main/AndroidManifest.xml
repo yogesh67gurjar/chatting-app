@@ -23,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".Activity.Chatting.InsideChat"
-            android:exported="false"
+
             android:parentActivityName=".Activity.MainActivity" />
         <activity
             android:name=".Activity.Welcome.Splash"

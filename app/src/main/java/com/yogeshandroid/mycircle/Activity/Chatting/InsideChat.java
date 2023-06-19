@@ -23,6 +23,8 @@ import com.yogeshandroid.mycircle.Modal.Message.MessageModel;
 import com.yogeshandroid.mycircle.R;
 import com.yogeshandroid.mycircle.databinding.ActivityInsideChatBinding;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -113,7 +115,6 @@ public class InsideChat extends AppCompatActivity {
                 });
             }
         });
-
 
     }
 }

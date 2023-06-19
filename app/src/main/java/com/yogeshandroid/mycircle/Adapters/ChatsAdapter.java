@@ -2,6 +2,7 @@ package com.yogeshandroid.mycircle.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.yogeshandroid.mycircle.Activity.Chatting.InsideChat;
 import com.yogeshandroid.mycircle.Modal.User;
 import com.yogeshandroid.mycircle.R;
 
+import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -74,6 +76,8 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
 //                        holder.lastMsgChat.setText(snapshot1.child("message").getValue().toString());
                         // same
                         holder.lastMsgChat.setText(snapshot1.child("message").getValue(String.class));
+
+                        holder.timeChat.setText(convertTimeToHourMinute(snapshot1.child("timeStamp").getValue(Long.class)));
                     }
                 }
             }
@@ -82,6 +86,20 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+
+    public String convertTimeToHourMinute(long timeInMillis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMillis);
+
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        String amPm = calendar.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+        Log.d("timetimetime",String.format("%02d:%02d %s", hour, minute, amPm));
+
+
+        return String.format("%02d:%02d %s", hour, minute, amPm);
+    }
+
 
     @Override
     public int getItemCount() {

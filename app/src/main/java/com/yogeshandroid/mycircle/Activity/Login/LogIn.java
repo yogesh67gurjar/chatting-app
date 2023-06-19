@@ -135,7 +135,7 @@ public class LogIn extends AppCompatActivity {
                                 editor.apply();
                                 FirebaseUser user=auth.getCurrentUser();
 
-                                User users = new User(user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail(), "",user.getUid(),"","");
+                                User users = new User(user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail(), "",user.getUid(),"","","");
 
                                 database.getReference().child("Users").child(user.getUid()).setValue(users);
 
