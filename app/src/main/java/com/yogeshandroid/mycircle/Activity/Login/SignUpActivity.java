@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.royrodriguez.transitionbutton.TransitionButton;
+import com.yogeshandroid.mycircle.Activity.MainActivity;
 import com.yogeshandroid.mycircle.Modal.User;
 import com.yogeshandroid.mycircle.databinding.ActivitySignupBinding;
 
@@ -41,21 +43,33 @@ public class SignUpActivity extends AppCompatActivity {
                 binding.passwordEt.setError("enter Password");
                 binding.passwordEt.requestFocus();
             } else {
-                binding.progressCard.setVisibility(View.VISIBLE);
+                binding.signUpBtn.startAnimation();
+//                binding.progressCard.setVisibility(View.VISIBLE);
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        binding.progressCard.setVisibility(View.GONE);
-                        String id = task.getResult().getUser().getUid();
-
-                        User user = new User("", name, email, password,id, "","","");
-                        database.getReference().child("Users").child(id).setValue(user);
-                        binding.emailEt.setText("");
-                        binding.usernameEt.setText("");
-                        binding.passwordEt.setText("");
-                        Toast.makeText(SignUpActivity.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
+//                        binding.progressCard.setVisibility(View.GONE);
+                        binding.signUpBtn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+                            @Override
+                            public void onAnimationStopEnd() {
+                                String id = task.getResult().getUser().getUid();
+                                User user = new User("", name, email, password,id, "","","");
+                                database.getReference().child("Users").child(id).setValue(user);
+                                binding.emailEt.setText("");
+                                binding.usernameEt.setText("");
+                                binding.passwordEt.setText("");
+                                Toast.makeText(SignUpActivity.this, "User Created Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(SignUpActivity.this, SignUpActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
 
                     } else {
-                        binding.progressCard.setVisibility(View.GONE);
+
+//                        binding.progressCard.setVisibility(View.GONE);
+                        binding.signUpBtn.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+
                         Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

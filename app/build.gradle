@@ -13,7 +13,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+//        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -58,10 +58,15 @@ dependencies {
 //    implementation('org.jitsi.react:jitsi-meet-sdk:2.9.0') { transitive = true }
 //
 
-
+    //multidex
+//    implementation 'androidx.multidex:multidex:2.0.1'
 
     // ripple
     implementation 'com.skyfishjy.ripplebackground:library:1.0.0'
+
+    // progress button
+    implementation 'com.royrodriguez:transitionbutton:0.2.0'
+
 
 
     // firebase
@@ -77,6 +82,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-storage:20.2.0'
+    implementation 'com.google.firebase:firebase-firestore:24.4.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

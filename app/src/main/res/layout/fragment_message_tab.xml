@@ -8,6 +8,7 @@
     tools:context=".Fragment.Home.Tablayout.MessageTab">
 
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Rv_Message"
         android:layout_width="match_parent"
@@ -54,5 +55,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.skyfishjy.library.RippleBackground>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

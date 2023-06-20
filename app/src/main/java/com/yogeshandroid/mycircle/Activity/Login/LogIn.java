@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.royrodriguez.transitionbutton.TransitionButton;
 import com.yogeshandroid.mycircle.Activity.MainActivity;
 import com.yogeshandroid.mycircle.Modal.User;
 import com.yogeshandroid.mycircle.databinding.ActivityLogInBinding;
@@ -67,23 +69,39 @@ public class LogIn extends AppCompatActivity {
 
         binding.logInBtn.setOnClickListener(v -> {
 
+
             String email = binding.emailEt.getText().toString();
             String password = binding.passwordEt.getText().toString();
             if (email.isEmpty()) {
                 binding.emailEt.setError("enter Email");
                 binding.emailEt.requestFocus();
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.emailEt.setError("enter valid Email");
+                binding.emailEt.requestFocus();
             } else if (password.isEmpty()) {
                 binding.passwordEt.setError("enter Password");
                 binding.passwordEt.requestFocus();
             } else {
-                binding.progressCard.setVisibility(View.VISIBLE);
+                binding.logInBtn.startAnimation();
+
+//                binding.progressCard.setVisibility(View.VISIBLE);
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                    binding.progressCard.setVisibility(View.GONE);
+//                    binding.progressCard.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        Toast.makeText(LogIn.this, "Login Successful....", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogIn.this, MainActivity.class));
-                        finish();
+                        binding.logInBtn.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+                            @Override
+                            public void onAnimationStopEnd() {
+                                Toast.makeText(LogIn.this, "Login Successful....", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(LogIn.this,MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
                     } else {
+                        binding.logInBtn.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+
                         Toast.makeText(LogIn.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -133,9 +151,9 @@ public class LogIn extends AppCompatActivity {
                                 editor.putString("google", "yes");
                                 editor.commit();
                                 editor.apply();
-                                FirebaseUser user=auth.getCurrentUser();
+                                FirebaseUser user = auth.getCurrentUser();
 
-                                User users = new User(user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail(), "",user.getUid(),"","","");
+                                User users = new User(user.getPhotoUrl().toString(), user.getDisplayName(), user.getEmail(), "", user.getUid(), "", "", "");
 
                                 database.getReference().child("Users").child(user.getUid()).setValue(users);
 
