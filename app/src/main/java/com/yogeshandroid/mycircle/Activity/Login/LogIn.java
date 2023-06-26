@@ -68,8 +68,6 @@ public class LogIn extends AppCompatActivity {
         });
 
         binding.logInBtn.setOnClickListener(v -> {
-
-
             String email = binding.emailEt.getText().toString();
             String password = binding.passwordEt.getText().toString();
             if (email.isEmpty()) {

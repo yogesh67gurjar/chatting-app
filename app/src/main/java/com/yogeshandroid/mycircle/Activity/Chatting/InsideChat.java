@@ -91,9 +91,7 @@ public class InsideChat extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
 
         binding.sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +100,6 @@ public class InsideChat extends AppCompatActivity {
                 String msg = binding.text.getText().toString();
                 final MessageModel model = new MessageModel(senderId, msg);
                 model.setTimeStamp(new Date().getTime());
-
                 database.getReference().child("Chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -115,6 +112,5 @@ public class InsideChat extends AppCompatActivity {
                 });
             }
         });
-
     }
 }
